@@ -14,15 +14,15 @@ export const Results = props => (
 
                             <div className="card-text">
                                 <h3>
-                                    <a href={article.web_url}><img
-                                        style={{float: "right"}}
-                                        src={"https://www.nytimes.com/" + article.multimedia[1].url}
-                                        alt="img"/></a><br/>
+                                    <a href={article.web_url}>{article.multimedia.filter(media => media.subtype === 'thumbnail').map(media => (
+                                            <img src={'https://nytimes.com/' + media.url} style={{float: "right"}} alt={article.headline.main} />
+                                          ))}
+                                        </a><br/>
                                 </h3>
                                 <h5>
                                     Summary: {article.snippet}<br/><br/>
                                     Source: {article.source}<br/>
-                                    Author: {article.byline.original}<br/>
+                                   
                                     Published Date: {article.pub_date}<br/>
                                 </h5>
                             </div>
