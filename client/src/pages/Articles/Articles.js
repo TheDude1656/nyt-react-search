@@ -1,17 +1,18 @@
 import React, {Component} from "react";
-import DeleteBtn from "../../components/DeleteBtn";
+// import DeleteBtn from "../../components/DeleteBtn";
 import Jumbotron from "../../components/Jumbotron";
 import API from "../../utils/API";
-import {Link} from "react-router-dom";
+// import {Link} from "react-router-dom";
 import {Col, Row, Container} from "../../components/Grid";
-import {List, ListItem} from "../../components/List";
+// import {List, ListItem} from "../../components/List";
 import {
   Search,
-  TextArea,
+  // TextArea,
   FormBtn,
   Select,
   StartYear,
-  EndYear
+  EndYear,
+  Results
 } from "../../components/Form";
 
 class Articles extends Component {
@@ -28,8 +29,8 @@ class Articles extends Component {
 
   loadArticles = () => {
     API
-      .getArticles()
-      .then(res => this.setState({articles: res.data, title: "", date: "", url: ""}))
+      .getArticles({q: this.state.title})
+      .then(res => this.setState({articles: res.data.response.docs, title: "", date: "", url: ""}))
       .catch(err => console.log(err));
   };
 
@@ -47,12 +48,13 @@ class Articles extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    if (this.state.title && this.state.url) {
-      API
-        .saveArticle({title: this.state.title, date: this.state.date, url: this.state.url})
-        .then(res => this.loadArticles())
-        .catch(err => console.log(err));
-    }
+    this.loadArticles();
+    // if (this.state.title) {
+    //   API
+    //     .saveArticle({title: this.state.title, date: this.state.date, url: this.state.url})
+    //     .then(res => this.loadArticles())
+    //     .catch(err => console.log(err));
+    // }
   };
 
   render() {
@@ -62,7 +64,7 @@ class Articles extends Component {
           <Col size="12">
             <Jumbotron>
               <h1>
-                <i class="fa fa-newspaper-o" aria-hidden="true"></i>New York Times React Search</h1>
+                <i className="fa fa-newspaper-o" aria-hidden="true"></i>New York Times React Search</h1>
             </Jumbotron>
             <div className="card border-dark">
               <div className="card-header bg-dark text-light">
@@ -91,6 +93,9 @@ class Articles extends Component {
                 <i className="fa fa-table" aria-hidden="true"></i>
                 Article Results
               </div>
+             <Results 
+             articles={this.state.articles}
+             />
               <br/>
             </div>
           </Col>

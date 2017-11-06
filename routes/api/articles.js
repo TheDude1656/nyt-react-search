@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const articlesController = require("../../controllers/articlesController");
-
+const axios = require("axios");
 // Matches with "/api/articles"
 router
   .route("/")
@@ -14,10 +14,11 @@ router
   .put(articlesController.update)
   .delete(articlesController.remove);
 
-router.get("/searchresults", (req, res) => {
-  axios.get("https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=b9f91d369ff59547cd47b931d8cbc56b:0:74623931&q=", { params: req.query})
-  .then(({data: {results}}) => res.json(results))
-  .catch(err => res.status(422).json(err));
+router.get("/api/search", (req, res) => {
+  axios
+  axios.get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=b9f91d369ff59547cd47b931d8cbc56b:0:74623931&q=${req.query.q}`)
+  .then(response => res.json(response.data))
+  .catch(error => res.status(500).end());
 })
 
 module.exports = router;
