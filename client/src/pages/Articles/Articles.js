@@ -26,7 +26,7 @@ class Articles extends Component {
   state = {
     articles: [],
     title: "",
-    beginDate: (currentYear - 10),
+    beginDate: (currentYear - 5),
     endDate: (currentYear),
     query: "",
     url: ""
@@ -39,7 +39,7 @@ class Articles extends Component {
   loadArticles = () => {
     API
       .getArticles({q: this.state.title, beginDate: this.state.beginDate, endDate: this.state.endDate})
-      .then(res => this.setState({articles: res.data.response.docs, title: "", beginDate: "", endDate: "", url: ""}))
+      .then(res => this.setState({articles: res.data.response.docs}))
       .catch(err => console.log(err));
   };
 
