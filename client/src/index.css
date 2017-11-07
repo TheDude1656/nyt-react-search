@@ -2,11 +2,31 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background-image: url('maxresdefault.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
-.card-img-left {
-  border-bottom-left-radius: calc(.25rem - 1px);
-  border-top-left-radius: calc(.25rem - 1px);
-  float: left;
-  padding-right: 1em;
-  margin-bottom: -1.25em;
-}
+
+.special-card {
+    background-color: lightcyan;
+  }
+
+  .customJumbo {
+    opacity: 0.8;
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 2px black;
+    
+    border-radius: 20px;
+  }
+  .customCard {
+    border-radius: 20px;
+  }
+
+  .shadowText {
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 2px black;
+  }
+  
+  .customBtn {
+    margin: 0px 0px 10px 15px;
+  }

@@ -6,25 +6,25 @@ export const Results = props => (
             .articles
             .map(article => <ul key={article._id}>
                 <div className="container">
-                    <div className="card border-dark">
-                        <div className="card-body">
-                            <h2 className="card-title">
+                    <div className="card border-dark" style={{marginRight: 40}}>
+                        <div className="card-body special-card">
+                            <h5 className="card-title">
                                 <a href={article.web_url}>{article.headline.print_headline}</a>
-                            </h2>
+                            </h5>
 
                             <div className="card-text">
-                                <h3>
-                                    <a href={article.web_url}>{article.multimedia.filter(media => media.subtype === 'thumbnail').map(media => (
+                                <h5 className="text-muted">
+                                    <a href={article.web_url}>{article.multimedia.filter(media => media.subtype === 'wide').map(media => (
                                             <img src={'https://nytimes.com/' + media.url} style={{float: "right"}} alt={article.headline.main} />
                                           ))}
                                         </a><br/>
-                                </h3>
-                                <h5>
-                                    Summary: {article.snippet}<br/><br/>
-                                    Source: {article.source}<br/>
-                                   
-                                    Published Date: {article.pub_date}<br/>
                                 </h5>
+                                <h6>
+                                    {article.snippet}<br/><br/>
+                                    
+                                    Author: {article.byline ? article.byline.original : 'Not Listed' }<br/>
+                                    Published Date: {article.pub_date}<br/>
+                                </h6>
                             </div>
                         </div>
                     </div>

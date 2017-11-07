@@ -5,21 +5,30 @@ import API from "../../utils/API";
 // import {Link} from "react-router-dom";
 import {Col, Row, Container} from "../../components/Grid";
 // import {List, ListItem} from "../../components/List";
+
 import {
   Search,
   // TextArea,
   FormBtn,
   Select,
-  StartYear,
-  EndYear,
+  // StartYear,
+  // EndYear,
   Results
 } from "../../components/Form";
+
+const currentYear = (new Date()).getFullYear();
+var years = [];
+for (let i = 1851; i <= currentYear; i++) {
+  years.unshift(i);
+}
 
 class Articles extends Component {
   state = {
     articles: [],
     title: "",
-    date: "",
+    beginDate: (currentYear - 10),
+    endDate: (currentYear),
+    query: "",
     url: ""
   };
 
@@ -29,8 +38,8 @@ class Articles extends Component {
 
   loadArticles = () => {
     API
-      .getArticles({q: this.state.title})
-      .then(res => this.setState({articles: res.data.response.docs, title: "", date: "", url: ""}))
+      .getArticles({q: this.state.title, beginDate: this.state.beginDate, endDate: this.state.endDate})
+      .then(res => this.setState({articles: res.data.response.docs, title: "", beginDate: "", endDate: "", url: ""}))
       .catch(err => console.log(err));
   };
 
@@ -49,13 +58,7 @@ class Articles extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     this.loadArticles();
-    // if (this.state.title) {
-    //   API
-    //     .saveArticle({title: this.state.title, date: this.state.date, url: this.state.url})
-    //     .then(res => this.loadArticles())
-    //     .catch(err => console.log(err));
-    // }
-  };
+    };
 
   render() {
     return (
@@ -63,11 +66,11 @@ class Articles extends Component {
         <Row>
           <Col size="12">
             <Jumbotron>
-              <h1>
+              <h1 className="text-center">
                 <i className="fa fa-newspaper-o" aria-hidden="true"></i>New York Times React Search</h1>
             </Jumbotron>
-            <div className="card border-dark">
-              <div className="card-header bg-dark text-light">
+            <div className="card border-dark customCard">
+              <div className="card-header bg-dark text-light shadowText">
                 <i className="fa fa-search" aria-hidden="true"></i>Search Parameters
               </div>
               <br/>
@@ -78,9 +81,18 @@ class Articles extends Component {
                   name="title"
                   placeholder="Search Phrase (required)"/>
                 <Select/>
-                <StartYear/>
-                <EndYear/>
-
+                <div className="form-group container">
+                <label htmlFor="beginDateSelect">Select Beginning Year (Optional)</label>
+                <select className="form-control" value={this.state.beginDate} onChange={this.handleInputChange} name="beginDate">
+                  { years.map(year => <option key={year} value={year}>{year}</option>) }
+                </select>
+              </div>
+              <div className="form-group container">
+              <label htmlFor="endDateSelect">Select End Year (Optional)</label>
+              <select className="form-control" value={this.state.endDate} onChange={this.handleInputChange} name="endDate">
+                { years.map(year => <option key={year +"end"} value={year}>{year}</option>) }
+              </select>
+            </div>
                 <FormBtn onClick={this.handleFormSubmit}>
                   <i className="fa fa-search" aria-hidden="true"></i>
                   Search
@@ -88,8 +100,8 @@ class Articles extends Component {
               </form>
             </div>
             <br/>
-            <div className="card border-dark">
-              <div className="card-header bg-dark text-light">
+            <div className="card border-dark customCard">
+              <div className="card-header bg-dark text-light shadowText" style={{marginBottom: 10}}>
                 <i className="fa fa-table" aria-hidden="true"></i>
                 Article Results
               </div>

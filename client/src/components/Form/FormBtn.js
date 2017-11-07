@@ -1,6 +1,6 @@
 import React from "react";
 
 export const FormBtn = props =>
-  <button {...props} style={{ float: "right" }} className="btn btn-dark">
+  <button {...props} className="btn btn-dark customBtn shadowText">
     {props.children}
   </button>;
