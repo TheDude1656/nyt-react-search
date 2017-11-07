@@ -9,7 +9,7 @@ export const Results = props => (
                     <div className="card border-dark" style={{marginRight: 40}}>
                         <div className="card-body special-card">
                             <h5 className="card-title">
-                                <a href={article.web_url}>{article.headline.main}</a>
+                                <a href={article.web_url}>{article.headline.print_headline || article.headline.main}</a>
                             </h5>
 
                             <div className="card-text">
