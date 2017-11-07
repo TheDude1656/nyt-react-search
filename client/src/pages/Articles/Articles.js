@@ -10,9 +10,8 @@ import {
   Search,
   // TextArea,
   FormBtn,
-  Select,
-  // StartYear,
-  // EndYear,
+  // Select,
+  // StartYear, EndYear,
   Results
 } from "../../components/Form";
 
@@ -28,6 +27,7 @@ class Articles extends Component {
     title: "",
     beginDate: (currentYear - 5),
     endDate: (currentYear),
+    numSearches: 5,
     query: "",
     url: ""
   };
@@ -38,7 +38,7 @@ class Articles extends Component {
 
   loadArticles = () => {
     API
-      .getArticles({q: this.state.title, beginDate: this.state.beginDate, endDate: this.state.endDate})
+      .getArticles({q: this.state.title, beginDate: this.state.beginDate, endDate: this.state.endDate, numSearches: this.state.numSearches})
       .then(res => this.setState({articles: res.data.response.docs}))
       .catch(err => console.log(err));
   };
@@ -58,7 +58,7 @@ class Articles extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     this.loadArticles();
-    };
+  };
 
   render() {
     return (
@@ -80,19 +80,35 @@ class Articles extends Component {
                   onChange={this.handleInputChange}
                   name="title"
                   placeholder="Search Phrase (required)"/>
-                <Select/>
                 <div className="form-group container">
-                <label htmlFor="beginDateSelect">Select Beginning Year (Optional)</label>
-                <select className="form-control" value={this.state.beginDate} onChange={this.handleInputChange} name="beginDate">
-                  { years.map(year => <option key={year} value={year}>{year}</option>) }
-                </select>
-              </div>
-              <div className="form-group container">
-              <label htmlFor="endDateSelect">Select End Year (Optional)</label>
-              <select className="form-control" value={this.state.endDate} onChange={this.handleInputChange} name="endDate">
-                { years.map(year => <option key={year +"end"} value={year}>{year}</option>) }
-              </select>
-            </div>
+                  <label htmlFor="numSearched">Number of results</label>
+                  <select className="form-control" value={this.props.numSearches} id="numSearches" onChange={this.handleInputChange}>
+                    <option value="1">1</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                  </select>
+                </div>
+
+                <div className="form-group container">
+                  <label htmlFor="beginDateSelect">Select Beginning Year (Optional)</label>
+                  <select
+                    className="form-control"
+                    value={this.state.beginDate}
+                    onChange={this.handleInputChange}
+                    name="beginDate">
+                    {years.map(year => <option key={year} value={year}>{year}</option>)}
+                  </select>
+                </div>
+                <div className="form-group container">
+                  <label htmlFor="endDateSelect">Select End Year (Optional)</label>
+                  <select
+                    className="form-control"
+                    value={this.state.endDate}
+                    onChange={this.handleInputChange}
+                    name="endDate">
+                    {years.map(year => <option key={year + "end"} value={year}>{year}</option>)}
+                  </select>
+                </div>
                 <FormBtn onClick={this.handleFormSubmit}>
                   <i className="fa fa-search" aria-hidden="true"></i>
                   Search
@@ -101,13 +117,15 @@ class Articles extends Component {
             </div>
             <br/>
             <div className="card border-dark customCard">
-              <div className="card-header bg-dark text-light shadowText" style={{marginBottom: 10}}>
+              <div
+                className="card-header bg-dark text-light shadowText"
+                style={{
+                marginBottom: 10
+              }}>
                 <i className="fa fa-table" aria-hidden="true"></i>
                 Article Results
               </div>
-             <Results 
-             articles={this.state.articles}
-             />
+              <Results articles={this.state.articles}/>
               <br/>
             </div>
           </Col>
