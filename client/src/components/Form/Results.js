@@ -1,7 +1,7 @@
 import React from "react";
 
 export const Results = props => (
-    <wrapper>
+    <div>
         {props
             .articles
             .map(article => <ul key={article._id}>
@@ -15,7 +15,7 @@ export const Results = props => (
                             <div className="card-text">
                                 <h5 className="text-muted">
                                     <a href={article.web_url}>{article.multimedia.filter(media => media.subtype === 'wide').map(media => (
-                                            <img src={'https://nytimes.com/' + media.url} style={{float: "right"}} alt={article.headline.main} />
+                                            <img src={'https://nytimes.com/' + media.url} key={article.headline.main} style={{float: "right"}} alt={article.headline.main} />
                                           ))}
                                         </a><br/>
                                 </h5>
@@ -24,11 +24,12 @@ export const Results = props => (
                                     
                                     Author: {article.byline ? article.byline.original : 'Not Listed' }<br/>
                                     Published Date: {article.pub_date}<br/>
+                                    <a href={article.web_url}>Link</a>
                                 </h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </ul>)}
-    </wrapper>
+    </div>
 );
