@@ -80,15 +80,7 @@ class Articles extends Component {
                   onChange={this.handleInputChange}
                   name="title"
                   placeholder="Search Phrase (required)"/>
-                <div className="form-group container">
-                  <label htmlFor="numSearched">Number of results</label>
-                  <select className="form-control" value={this.props.numSearches} id="numSearches" onChange={this.handleInputChange}>
-                    <option value="1">1</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                  </select>
-                </div>
-
+                
                 <div className="form-group container">
                   <label htmlFor="beginDateSelect">Select Beginning Year (Optional)</label>
                   <select
