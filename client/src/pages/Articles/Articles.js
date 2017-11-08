@@ -1,19 +1,9 @@
 import React, {Component} from "react";
-// import DeleteBtn from "../../components/DeleteBtn";
 import Jumbotron from "../../components/Jumbotron";
 import API from "../../utils/API";
-// import {Link} from "react-router-dom";
 import {Col, Row, Container} from "../../components/Grid";
-// import {List, ListItem} from "../../components/List";
 
-import {
-  Search,
-  // TextArea,
-  FormBtn,
-  // Select,
-  // StartYear, EndYear,
-  Results
-} from "../../components/Form";
+import {Search, FormBtn, Results} from "../../components/Form";
 
 const currentYear = (new Date()).getFullYear();
 var years = [];
@@ -80,7 +70,7 @@ class Articles extends Component {
                   onChange={this.handleInputChange}
                   name="title"
                   placeholder="Search Phrase (required)"/>
-                
+
                 <div className="form-group container">
                   <label htmlFor="beginDateSelect">Select Beginning Year (Optional)</label>
                   <select

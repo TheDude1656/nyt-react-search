@@ -1,6 +1,8 @@
 import React from "react";
 
+
 export const Results = props => (
+    
     <div>
         {props
             .articles
@@ -26,6 +28,7 @@ export const Results = props => (
                                     Published Date: {article.pub_date}<br/>
                                     <a href={article.web_url}>Link</a>
                                 </h6>
+                                
                             </div>
                         </div>
                     </div>
